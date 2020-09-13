@@ -1,7 +1,7 @@
 #pragma once
-#include <Windows.h>
+#include <windows.h>
 #include <string>
-#include <TlHelp32.h>
+#include <tlhelp32.h>
 #include <iostream>
 
 #include "dumper.hpp"

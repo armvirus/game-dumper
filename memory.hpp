@@ -1,6 +1,7 @@
 #pragma once
 
-namespace memory {
-	DWORD find_process_by_id(const std::string& process_name);
-	uintptr_t get_module_base(DWORD process_id);
+namespace memory 
+{
+	std::uint32_t find_process_by_id(const std::string& process_name);
+	std::uintptr_t get_module_base(std::uint32_t process_id);
 }
