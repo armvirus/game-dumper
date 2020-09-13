@@ -32,14 +32,11 @@ namespace dumper
 
 		printf("[+] allocated memory at [%p] with size [%i]\n", copied_buffer, nt_header.OptionalHeader.SizeOfImage);
 
-		if (ReadProcessMemory(game_handle, reinterpret_cast<LPCVOID>(module_base), reinterpret_cast<LPVOID>(copied_buffer), nt_header.OptionalHeader.SizeOfImage, 0))
+		std::size_t page_size = 0x1000;
+
+		for (std::uint32_t page = 0x0; page < nt_header.OptionalHeader.SizeOfImage; page += page_size)
 		{
-			printf("[+] copied process to current process [%p] -> [%p]\n\n", module_base, copied_buffer);
-		}
-		else
-		{
-			printf("[-] failed to copy process to current process.\n");
-			return false;
+			ReadProcessMemory(game_handle, reinterpret_cast<LPCVOID>(module_base + page), reinterpret_cast<LPVOID>(copied_buffer + page), page_size, 0);
 		}
 
 		PIMAGE_DOS_HEADER image_dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(copied_buffer);
